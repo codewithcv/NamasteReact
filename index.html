@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Food App</title>
   </head>
   <body>
-    <div>
+    <div id="root">
+      <h1>React Not rendered</h1>
+    </div>
+    <!--<div>
       <h1>Hello from HTML6</h1>
     </div>
-    <div id="root"></div>
     <div id="reactRoot">
       <h1>React Not rendered</h1>
     </div>
@@ -24,7 +26,7 @@
       const root = document.getElementById("root");
       root.appendChild(heading);
     </script>
-    <!-- <script
+    <script>
       crossorigin
       src="https://unpkg.com/react@18/umd/react.development.js"
     ></script>
@@ -32,6 +34,6 @@
       crossorigin
       src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
     ></script> -->
-    <script type="module" src="./App.js"></script>
+    <script type="module" src="./src/App.js"></script>
   </body>
 </html>
