@@ -1,6 +1,6 @@
 import RestCards from "./RestCards";
-import { restaurantData } from "../utils/mockData";
-import { useState } from "react";
+//import { restaurantData } from "../utils/mockData";
+import { useEffect, useState } from "react";
 
 const topRestaurants = (listOfRestaurant) => {
   const filteredRestuarant = listOfRestaurant?.filter((restaurant) => {
@@ -18,9 +18,33 @@ const searchedRestaurant = (searchText, listOfRestaurant) => {
   return filteredRestuarant;
 };
 
+const filterJSONData = (jsonData) => {
+  const filteredJSONData = jsonData?.data?.cards?.filter((data) => {
+    return data.cardType === "seeAllRestaurants";
+  });
+  return filteredJSONData;
+};
+
 const Body = () => {
-  const [restaurantList, setRestaurantList] = useState(restaurantData);
+  const [restaurantList, setRestaurantList] = useState([]);
+  const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchRestaurant, setSearchRestaurant] = useState("");
+
+  useEffect(() => {
+    getRestaurantData();
+  }, []);
+
+  const getRestaurantData = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    const filteredData = filterJSONData(json);
+    console.log("filteredData", filteredData[0]?.data?.data?.cards);
+    setRestaurantList(filteredData[0]?.data?.data?.cards);
+    setFilteredRestaurantList(filteredData[0]?.data?.data?.cards);
+  };
+
   return (
     <div id="body-container">
       <input
@@ -32,16 +56,16 @@ const Body = () => {
           setSearchRestaurant(searchText);
           const searchedRestaurantList = searchedRestaurant(
             searchText,
-            restaurantData
+            restaurantList
           );
-          setRestaurantList(searchedRestaurantList);
+          setFilteredRestaurantList(searchedRestaurantList);
         }}
       ></input>
       <button
         className="top-restaurants"
         onClick={() => {
           const topRestaurantsList = topRestaurants(restaurantList);
-          setRestaurantList(topRestaurantsList);
+          setFilteredRestaurantList(topRestaurantsList);
         }}
       >
         Show Top Restaurants
@@ -49,14 +73,14 @@ const Body = () => {
       <button
         className="all-restaurants"
         onClick={() => {
-          setRestaurantList(restaurantData);
+          setFilteredRestaurantList(restaurantList);
         }}
       >
         Show All Restaurants
       </button>
       <div id="res-cards-container">
-        {restaurantList?.length > 0 ? (
-          restaurantList.map((restaurant) => (
+        {filteredRestaurantList?.length > 0 ? (
+          filteredRestaurantList.map((restaurant) => (
             <RestCards
               key={restaurant.data.id}
               reslist={restaurant.data}
