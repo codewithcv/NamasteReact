@@ -29,6 +29,7 @@ const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchRestaurant, setSearchRestaurant] = useState("");
+  const [apiCompleted, setAPICompleted] = useState(false);
 
   useEffect(() => {
     getRestaurantData();
@@ -40,9 +41,9 @@ const Body = () => {
     );
     const json = await data.json();
     const filteredData = filterJSONData(json);
-    console.log("filteredData", filteredData[0]?.data?.data?.cards);
     setRestaurantList(filteredData[0]?.data?.data?.cards);
     setFilteredRestaurantList(filteredData[0]?.data?.data?.cards);
+    setAPICompleted(true);
   };
 
   return (
@@ -86,8 +87,10 @@ const Body = () => {
               reslist={restaurant.data}
             ></RestCards>
           ))
-        ) : (
+        ) : apiCompleted ? (
           <h1>No Results found</h1>
+        ) : (
+          <h1>Loading...</h1>
         )}
       </div>
     </div>
