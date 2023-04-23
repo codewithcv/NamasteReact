@@ -1,6 +1,7 @@
 import RestCards from "./RestCards";
 //import { restaurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
+import ShimmerUI from "./ShimmerUI";
 
 const topRestaurants = (listOfRestaurant) => {
   const filteredRestuarant = listOfRestaurant?.filter((restaurant) => {
@@ -36,14 +37,18 @@ const Body = () => {
   }, []);
 
   const getRestaurantData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    const filteredData = filterJSONData(json);
-    setRestaurantList(filteredData[0]?.data?.data?.cards);
-    setFilteredRestaurantList(filteredData[0]?.data?.data?.cards);
-    setAPICompleted(true);
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&page_type=DESKTOP_WEB_LISTING"
+      );
+      const json = await data.json();
+      const filteredData = filterJSONData(json);
+      setRestaurantList(filteredData[0]?.data?.data?.cards);
+      setFilteredRestaurantList(filteredData[0]?.data?.data?.cards);
+      setAPICompleted(true);
+    } catch (error) {
+      console.log("error in API ->", error);
+    }
   };
 
   return (
@@ -90,7 +95,7 @@ const Body = () => {
         ) : apiCompleted ? (
           <h1>No Results found</h1>
         ) : (
-          <h1>Loading...</h1>
+          <ShimmerUI></ShimmerUI>
         )}
       </div>
     </div>
