@@ -4,15 +4,16 @@ import "./App.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import About from "./components/About";
 import Error from "./components/Error";
+import ResDetails from "./components/ResDetails";
 
 const MyFoodApp = () => {
   return (
     <>
       <Header />
-      <Body />
+      <Outlet />
       <Footer />
     </>
   );
@@ -23,10 +24,20 @@ const appRouter = createBrowserRouter([
     path: "/",
     element: <MyFoodApp />,
     errorElement: <Error />,
-  },
-  {
-    path: "/about",
-    element: <About />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/restaurant/:id",
+        element: <ResDetails />,
+      },
+    ],
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));

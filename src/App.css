@@ -64,3 +64,34 @@
   border: 1px solid #f0f0f0;
   margin-top: 10px;
 }
+.res-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.res-details img {
+  margin-top: 10px;
+  width: 600px;
+  height: 300px;
+}
+.menu-items {
+  display: flex;
+  flex-direction: row;
+  row-gap: 8px;
+  flex-wrap: wrap;
+}
+.menu-items li {
+  list-style: none;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}

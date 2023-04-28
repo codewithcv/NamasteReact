@@ -2,6 +2,8 @@ import RestCards from "./RestCards";
 //import { restaurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
+import { RESTAURANT_LIST_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const topRestaurants = (listOfRestaurant) => {
   const filteredRestuarant = listOfRestaurant?.filter((restaurant) => {
@@ -38,9 +40,7 @@ const Body = () => {
 
   const getRestaurantData = async () => {
     try {
-      const data = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&page_type=DESKTOP_WEB_LISTING"
-      );
+      const data = await fetch(RESTAURANT_LIST_URL);
       const json = await data.json();
       const filteredData = filterJSONData(json);
       setRestaurantList(filteredData[0]?.data?.data?.cards);
@@ -87,10 +87,12 @@ const Body = () => {
       <div id="res-cards-container">
         {filteredRestaurantList?.length > 0 ? (
           filteredRestaurantList.map((restaurant) => (
-            <RestCards
-              key={restaurant.data.id}
-              reslist={restaurant.data}
-            ></RestCards>
+            <Link to={"/restaurant/" + restaurant.data.id}>
+              <RestCards
+                key={restaurant.data.id}
+                reslist={restaurant.data}
+              ></RestCards>
+            </Link>
           ))
         ) : apiCompleted ? (
           <h1>No Results found</h1>

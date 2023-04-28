@@ -1,4 +1,4 @@
-import CLOUD_IMAGE_URL from "../utils/constants";
+import { CLOUD_IMAGE_URL } from "../utils/constants";
 
 const RestCards = (props) => {
   const {
