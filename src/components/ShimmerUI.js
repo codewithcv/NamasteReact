@@ -3,8 +3,8 @@ const ShimmerUI = () => {
     <>
       {Array(10)
         .fill("")
-        .map((e) => (
-          <div className="shimmer-cards-container">
+        .map((e, index) => (
+          <div className="shimmer-cards-container" key={index}>
             <div className="shimmer-cards-img"></div>
             <div className="shimmer-cards-name"></div>
             <div className="shimmer-cards-cuisine"></div>

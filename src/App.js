@@ -3,12 +3,31 @@ import ReactDOM from "react-dom/client";
 import "./App.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
+import Footer from "./components/Footer";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import About from "./components/About";
+import Error from "./components/Error";
 
-const myFoodApp = (
-  <>
-    <Header></Header>
-    <Body></Body>
-  </>
-);
+const MyFoodApp = () => {
+  return (
+    <>
+      <Header />
+      <Body />
+      <Footer />
+    </>
+  );
+};
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <MyFoodApp />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(myFoodApp);
+root.render(<RouterProvider router={appRouter} />);
