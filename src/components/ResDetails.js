@@ -32,11 +32,14 @@ const ResDetails = () => {
     const json = await data.json();
     const filteredReaturantData = filterReaturantData(json?.data?.cards);
     const filteredMenu = filterMenu(json?.data?.cards);
-    const restaurantInfo = filteredReaturantData[0]?.card?.card?.info;
-    const menuInfo = filteredMenu[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-    console.log("json?.data?.cards", json?.data?.cards);
-    console.log("restaurantInfo", restaurantInfo);
-    console.log("menuInfo", menuInfo);
+    const restaurantInfo =
+      filteredReaturantData &&
+      filteredReaturantData.length > 0 &&
+      filteredReaturantData[0]?.card?.card?.info;
+    const menuInfo =
+      filteredMenu &&
+      filteredMenu.length > 0 &&
+      filteredMenu[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
     setRestInfo(restaurantInfo);
     setResMenuInfo(menuInfo);
   };
