@@ -1,9 +1,10 @@
 import RestCards from "./RestCards";
-//import { restaurantData } from "../utils/mockData";
+import { restaurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { RESTAURANT_LIST_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import useResCards from "../utils/useResCards";
 
 const topRestaurants = (listOfRestaurant) => {
   const filteredRestuarant = listOfRestaurant?.filter((restaurant) => {
@@ -21,35 +22,14 @@ const searchedRestaurant = (searchText, listOfRestaurant) => {
   return filteredRestuarant;
 };
 
-const filterJSONData = (jsonData) => {
-  const filteredJSONData = jsonData?.data?.cards?.filter((data) => {
-    return data.cardType === "seeAllRestaurants";
-  });
-  return filteredJSONData;
-};
-
 const Body = () => {
-  const [restaurantList, setRestaurantList] = useState([]);
   const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchRestaurant, setSearchRestaurant] = useState("");
-  const [apiCompleted, setAPICompleted] = useState(false);
+  const { restaurantList, apiCompleted } = useResCards();
 
   useEffect(() => {
-    getRestaurantData();
-  }, []);
-
-  const getRestaurantData = async () => {
-    try {
-      const data = await fetch(RESTAURANT_LIST_URL);
-      const json = await data.json();
-      const filteredData = filterJSONData(json);
-      setRestaurantList(filteredData[0]?.data?.data?.cards);
-      setFilteredRestaurantList(filteredData[0]?.data?.data?.cards);
-      setAPICompleted(true);
-    } catch (error) {
-      console.log("error in API ->", error);
-    }
-  };
+    setFilteredRestaurantList(restaurantList);
+  }, [restaurantList]);
 
   return (
     <div id="body-container">
