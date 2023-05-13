@@ -37,7 +37,8 @@
   cursor: pointer;
   border: 1px solid grey;
 }
-.top-restaurants {
+.top-restaurants,
+.all-restaurants {
   margin: 10px;
 }
 .shimmer-cards-container {
@@ -94,4 +95,8 @@ a:focus,
 a:active {
   text-decoration: none;
   color: inherit;
+}
+#nav-links span {
+  font-weight: 700;
+  margin-right: 10px;
 }

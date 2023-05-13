@@ -1,10 +1,9 @@
 import RestCards from "./RestCards";
-import { restaurantData } from "../utils/mockData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
-import { RESTAURANT_LIST_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useResCards from "../utils/useResCards";
+import UserContext from "../utils/UserContext";
 
 const topRestaurants = (listOfRestaurant) => {
   const filteredRestuarant = listOfRestaurant?.filter((restaurant) => {
@@ -26,6 +25,7 @@ const Body = () => {
   const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchRestaurant, setSearchRestaurant] = useState("");
   const { restaurantList, apiCompleted } = useResCards();
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     setFilteredRestaurantList(restaurantList);
@@ -64,6 +64,18 @@ const Body = () => {
       >
         Show All Restaurants
       </button>
+      <input
+        value={user.name}
+        onChange={(e) => {
+          setUser({ ...user, name: e.target.value });
+        }}
+      ></input>
+      <input
+        value={user.email}
+        onChange={(e) => {
+          setUser({ ...user, email: e.target.value });
+        }}
+      ></input>
       <div id="res-cards-container">
         {filteredRestaurantList?.length > 0 ? (
           filteredRestaurantList.map((restaurant) => (

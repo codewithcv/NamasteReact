@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useContext, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./App.css";
 import Header from "./components/Header";
@@ -9,14 +9,19 @@ import Error from "./components/Error";
 import ResDetails from "./components/ResDetails";
 import Contact from "./components/Contact";
 const About = lazy(() => import("./components/About"));
+import UserContext from "./utils/UserContext";
 
 const MyFoodApp = () => {
+  const [user, setUser] = useState({
+    name: "dummyName",
+    email: "dummyEmail@test.com",
+  });
   return (
-    <>
+    <UserContext.Provider value={{ user: user, setUser: setUser }}>
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </UserContext.Provider>
   );
 };
 
